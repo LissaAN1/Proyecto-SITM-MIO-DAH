@@ -6,4 +6,6 @@ build
 # Ignore todas las carpetas excepto Tracker
 *
 !Tracker/
+
+!Printer.ice
 !.gitignore

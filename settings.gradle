@@ -6,6 +6,6 @@
  */
 
 rootProject.name = 'Proyecto-SITM-MIO-DAH'
-include 'bus'
+//include 'bus'
 include 'Tracker'
-include 'Cco'
+//include 'Cco'
