@@ -1,36 +1,32 @@
 package model;
 
 public class Parada {
-    private int id;
-    private String nombre;
-    private double latitud;
-    private double longitud;
 
-    public Parada(int id, String nombre, double latitud, double longitud) {
-        this.id = id;
-        this.nombre = nombre;
-        this.latitud = latitud;
-        this.longitud = longitud;
+
+    private final String stopId;
+    private final String shortName;
+    private final double decimalLatit;
+    private final double decimalLong;
+
+    public Parada(String stopId, String shortName, double decimalLatit, double decimalLong) {
+        this.stopId = stopId;
+        this.shortName = shortName;
+        this.decimalLatit = decimalLatit;
+        this.decimalLong = decimalLong;
     }
 
-    public int getId() {
-        return id;
-    }
+    public String getStopId() { return stopId; }
+    public String getShortName() { return shortName; }
+    public double getDecimalLatit() { return decimalLatit; }
+    public double getDecimalLong() { return decimalLong; }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
+    public static double calcularDistanciaKm(Parada p1, Parada p2) {
+        double result=2;
+        return result;
     }
 
     @Override
     public String toString() {
-        return nombre + " (" + latitud + ", " + longitud + ")";
+        return shortName + " (" + stopId + ")";
     }
 }
