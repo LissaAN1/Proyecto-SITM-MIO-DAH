@@ -1,3 +1,5 @@
+package model;
+
 public class Parada {
     private int id;
     private String nombre;

@@ -1,3 +1,5 @@
+package model;
+
 public class Arco {
     private Parada inicio;
     private Parada fin;

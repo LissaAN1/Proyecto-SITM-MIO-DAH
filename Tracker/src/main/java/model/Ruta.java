@@ -1,3 +1,5 @@
+package model;
+
 import java.util.List;
 
 public class Ruta {
@@ -18,7 +20,7 @@ public class Ruta {
     }
 
     public void imprimirRuta() {
-        System.out.println("Ruta: " + nombre);
+        System.out.println("model.Ruta: " + nombre);
         for (Arco arco : arcos) {
             System.out.println(arco);
         }
