@@ -13,7 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
 
-public class CsvDataLoader {
+public class DataLoader {
 
     // Lines.csv
     public Map<String, Ruta> loadLines(String filePath) throws IOException {
