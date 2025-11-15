@@ -1,11 +1,51 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+# =======================================
+# Gradle
+# =======================================
+.gradle/
+build/
+out/
 
-# Ignore Gradle build output directory
-build
-# Ignore todas las carpetas excepto Tracker
-*
-!Tracker/
+# Mantener los archivos del wrapper......
+!gradlew
+!gradlew.bat
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
 
-!Printer.ice
-!.gitignore
+# =======================================
+# IDEs
+# =======================================
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VSCode
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+
+# =======================================
+# Java
+# =======================================
+*.class
+*.log
+
+
+# =======================================
+# OS files
+# =======================================
+.DS_Store
+Thumbs.db
+
+
+# =======================================
+# Data files
+# =======================================
+/data/*
+!/data/readme.txt
