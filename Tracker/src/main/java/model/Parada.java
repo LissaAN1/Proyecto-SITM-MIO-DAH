@@ -35,7 +35,7 @@ public class Parada {
                Math.cos(lat1Rad) * Math.cos(lat2Rad) *
                Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
-        // Ángulo central entre los dos puntos en superficie terrestre:
+        // Angulo central entre los dos puntos en superficie terrestre:
         double ang = 2 * Math.atan2(Math.sqrt(hav), Math.sqrt(1 - hav));
 
         return earthRadius * ang;

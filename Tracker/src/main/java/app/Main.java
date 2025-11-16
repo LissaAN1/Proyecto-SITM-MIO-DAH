@@ -1,17 +1,16 @@
 package app;
 
-import java.util.Map;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-import model.Ruta;
+import graph.GraphDrawer;
+import io.DataLoader;
+import model.Arco;
 import model.Parada;
 import model.ParadaDeRuta;
-import model.Arco;
-
-import io.DataLoader;
-
+import model.Ruta;
 import service.ArcBuilder;
 import service.ArcoPrinter;
 import service.RouteGrouping;
@@ -44,8 +43,10 @@ public class Main {
             System.out.println("=================================================");
             System.out.println("1) Mostrar TODOS los arcos");
             System.out.println("2) Mostrar arcos de UNA ruta específica");
-            System.out.println("3) Salir");
-            System.out.print("Seleccione una opción (1-3): ");
+            System.out.println("3) Dibujar grafo de UNA ruta específica");
+            System.out.println("4) Dibujar grafo COMPLETO (Todas las rutas)");
+            System.out.println("5) Salir");
+            System.out.print("Seleccione una opción (1-5): ");
 
             String option = scanner.nextLine().trim();
 
@@ -90,6 +91,36 @@ public class Main {
                 }
 
                 case "3" -> {
+                    System.out.print("\nIngrese el nombre corto de la ruta a dibujar (ej: T31, A47): ");
+                    String shortNameInput = scanner.nextLine().trim();
+                    String selectedRouteId = null;
+
+                    for (Ruta ruta : routes.values()) {
+                        if (ruta.getShortName().equalsIgnoreCase(shortNameInput)) {
+                            selectedRouteId = ruta.getLineId();
+                            break;
+                        }
+                    }
+
+                    if (selectedRouteId == null) {
+                        System.out.println("No se encontró ninguna ruta con nombre: " + shortNameInput);
+                        break;
+                    }
+
+                    String filename = "grafo_" + shortNameInput.toUpperCase() + ".jpg";
+                    System.out.println("\n Generando imagen para la ruta " + shortNameInput + "...");
+
+                    GraphDrawer.drawRouteGraph(selectedRouteId, arcsByRoute, filename);
+                }
+
+                case "4" -> {
+                    String filename = "grafo_completo_SITM-MIO.jpg";
+                    System.out.println("\n Generando imagen para el grafo COMPLETO...");
+                    
+                    GraphDrawer.drawFullGraph(arcsByRoute, filename);
+                }
+
+                case "5" -> {
                     System.out.println("Saliendo del programa...");
                     scanner.close();
                     return;
