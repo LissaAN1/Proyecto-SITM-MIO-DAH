@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class DataLoader {
 
@@ -94,13 +96,15 @@ public class DataLoader {
                 int orientation   = Integer.parseInt(clean(c[2])); // 2: ORIENTATION
                 String lineId     = clean(c[3]); // 3: LINEID
                 String stopId     = clean(c[4]); // 4: STOPID
+                int lineVariant   = Integer.parseInt(clean(c[6])); // 6: LINEVARIANT
 
                 ParadaDeRuta pdr = new ParadaDeRuta(
                         lineStopId,
                         stopSequence,
                         orientation,
                         lineId,
-                        stopId
+                        stopId,
+                        lineVariant
                 );
                 list.add(pdr);
             }
@@ -112,7 +116,11 @@ public class DataLoader {
     // Helpers comunes
 
     private BufferedReader newBufferedReader(String filePath) throws IOException {
-        return new BufferedReader(new FileReader(filePath));
+        return new BufferedReader(
+            new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8
+            )
+        );
     }
 
     private String clean(String raw) {

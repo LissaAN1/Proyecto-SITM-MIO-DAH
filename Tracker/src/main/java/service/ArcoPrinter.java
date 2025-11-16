@@ -21,7 +21,7 @@ public class ArcoPrinter {
 
             Ruta ruta = routes.get(routeId);
 
-            System.out.println("=======================================");
+            System.out.println("=================================================");
             if (ruta != null) {
                 System.out.println("Ruta " + ruta.getShortName() + " (" + ruta.getLineId() + ")");
                 System.out.println("Descripción: " + ruta.getDescription());

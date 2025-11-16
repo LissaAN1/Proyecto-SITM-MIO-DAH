@@ -10,27 +10,33 @@ import model.ParadaDeRuta;
 
 public class RouteGrouping {
     
-    public static Map<String, Map<Integer, List<ParadaDeRuta>>>
-    groupByRouteAndOrientation(List<ParadaDeRuta> lineStops) {
+    public static Map<String, Map<Integer, Map<Integer, List<ParadaDeRuta>>>>
+    groupByRouteOrientationVariant(List<ParadaDeRuta> lineStops) {
 
-        Map<String, Map<Integer, List<ParadaDeRuta>>> result = new HashMap<>();
+        Map<String, Map<Integer, Map<Integer, List<ParadaDeRuta>>>> result = new HashMap<>();
 
         for (ParadaDeRuta pdr : lineStops) {
             String routeId = pdr.getLineId();
             int orientation = pdr.getOrientation();
+            int variant = pdr.getLineVariant();
 
-            Map<Integer, List<ParadaDeRuta>> byOrientation =
+            Map<Integer, Map<Integer, List<ParadaDeRuta>>> byOrientation =
                     result.computeIfAbsent(routeId, k -> new HashMap<>());
 
+            Map<Integer, List<ParadaDeRuta>> byVariant =
+                    byOrientation.computeIfAbsent(orientation, k -> new HashMap<>());
+
             List<ParadaDeRuta> list =
-                    byOrientation.computeIfAbsent(orientation, k -> new ArrayList<>());
+                    byVariant.computeIfAbsent(variant, k -> new ArrayList<>());
 
             list.add(pdr);
         }
         
-        for (Map<Integer, List<ParadaDeRuta>> byOrientation : result.values()) {
-            for (List<ParadaDeRuta> list : byOrientation.values()) {
-                list.sort(Comparator.comparingInt(ParadaDeRuta::getStopSequence));
+        for (Map<Integer, Map<Integer, List<ParadaDeRuta>>> byOrientation : result.values()) {
+            for (Map<Integer, List<ParadaDeRuta>> byVariant : byOrientation.values()) {
+                for (List<ParadaDeRuta> list : byVariant.values()) {
+                    list.sort(Comparator.comparingInt(ParadaDeRuta::getStopSequence));
+                }
             }
         }
 
