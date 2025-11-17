@@ -27,17 +27,18 @@ public class GraphDrawer {
      */
     public static void drawRouteGraph(
             String routeId,
+            String routeName,
             Map<String, List<Arco>> arcsByRoute,
             String outputFilePath
     ) throws IOException {
 
         List<Arco> arcs = arcsByRoute.get(routeId);
         if (arcs == null || arcs.isEmpty()) {
-            System.out.println("No hay arcos para la ruta " + routeId);
+            System.out.println("No hay arcos para la ruta " + routeName.toUpperCase());
             return;
         }
 
-        String title = "Grafo de la ruta " + routeId;
+        String title = "GRAFO DE LA RUTA " + routeName.toUpperCase();
 
         drawGraph(
                 arcs,
@@ -50,7 +51,7 @@ public class GraphDrawer {
                 4       // radio de nodo
         );
 
-        System.out.println("Imagen del grafo de la ruta " + routeId +
+        System.out.println("Imagen del grafo de la ruta " + routeName.toUpperCase() +
                 " generada en: " + new File(outputFilePath).getAbsolutePath());
     }
 
@@ -72,7 +73,7 @@ public class GraphDrawer {
             return;
         }
 
-        String title = "Grafo completo - Todas las rutas";
+        String title = "GRAFO COMPLETO - TODAS LAS RUTAS";
 
         drawGraph(
                 allArcs,
@@ -198,6 +199,13 @@ public class GraphDrawer {
 
         // 6. Guardar en JPG
         File outFile = new File(outputFilePath);
+
+        File parent = outFile.getParentFile();
+
+        if (parent != null && !parent.exists()) {
+            parent.mkdirs();
+        }
+
         ImageIO.write(image, "jpg", outFile);
     }
 }

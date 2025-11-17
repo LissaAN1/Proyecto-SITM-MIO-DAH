@@ -23,6 +23,8 @@ public class Main {
         String stopsPath = "data/stops-241.csv";
         String lineStopsPath = "data/linestops-241.csv";
 
+        String graphsDir = "imgs";
+
         DataLoader loader = new DataLoader();
 
         Map<String, Ruta> routes = loader.loadLines(linesPath);
@@ -39,14 +41,12 @@ public class Main {
 
         while (true) {
             System.out.println("\n=================================================");
-            System.out.println("   Analizador de arcos SITM-MIO");
+            System.out.println("          Analizador de Arcos SITM-MIO");
             System.out.println("=================================================");
-            System.out.println("1) Mostrar TODOS los arcos");
-            System.out.println("2) Mostrar arcos de UNA ruta específica");
-            System.out.println("3) Dibujar grafo de UNA ruta específica");
-            System.out.println("4) Dibujar grafo COMPLETO (Todas las rutas)");
-            System.out.println("5) Salir");
-            System.out.print("Seleccione una opción (1-5): ");
+            System.out.println("1) Visualizar los arcos de todas las rutas");
+            System.out.println("2) Visualizar arcos de una ruta específica");
+            System.out.println("3) Salir del programa");
+            System.out.print("Seleccione una opción (1-3): ");
 
             String option = scanner.nextLine().trim();
 
@@ -55,6 +55,13 @@ public class Main {
                 case "1" -> {
                     System.out.println("\nMostrando TODOS los arcos de todas las rutas...\n");
                     ArcoPrinter.printArcsByRoute(arcsByRoute, routes);
+
+                    String filename = graphsDir + "/grafo_completo_SITM-MIO.jpg";
+
+                    System.out.println("\nGenerando imagen para el grafo COMPLETO........\n");
+
+                    GraphDrawer.drawFullGraph(arcsByRoute, filename);
+
                 }
 
                 case "2" -> {
@@ -88,39 +95,15 @@ public class Main {
                     System.out.println("\nMostrando arcos de la ruta . . .");
 
                     ArcoPrinter.printArcsByRoute(singleRouteMap, routes);
+
+                    String filename = graphsDir + "/grafo_" + shortNameInput.toUpperCase() + ".jpg";
+
+                    System.out.println("\nGenerando imagen para la ruta " + shortNameInput.toUpperCase() + "...\n");
+
+                    GraphDrawer.drawRouteGraph(selectedRouteId, shortNameInput, arcsByRoute, filename);
                 }
 
                 case "3" -> {
-                    System.out.print("\nIngrese el nombre corto de la ruta a dibujar (ej: T31, A47): ");
-                    String shortNameInput = scanner.nextLine().trim();
-                    String selectedRouteId = null;
-
-                    for (Ruta ruta : routes.values()) {
-                        if (ruta.getShortName().equalsIgnoreCase(shortNameInput)) {
-                            selectedRouteId = ruta.getLineId();
-                            break;
-                        }
-                    }
-
-                    if (selectedRouteId == null) {
-                        System.out.println("No se encontró ninguna ruta con nombre: " + shortNameInput);
-                        break;
-                    }
-
-                    String filename = "grafo_" + shortNameInput.toUpperCase() + ".jpg";
-                    System.out.println("\n Generando imagen para la ruta " + shortNameInput + "...");
-
-                    GraphDrawer.drawRouteGraph(selectedRouteId, arcsByRoute, filename);
-                }
-
-                case "4" -> {
-                    String filename = "grafo_completo_SITM-MIO.jpg";
-                    System.out.println("\n Generando imagen para el grafo COMPLETO...");
-                    
-                    GraphDrawer.drawFullGraph(arcsByRoute, filename);
-                }
-
-                case "5" -> {
                     System.out.println("Saliendo del programa...");
                     scanner.close();
                     return;
